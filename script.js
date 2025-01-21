@@ -1,11 +1,12 @@
 const apiKey = 'YOUR_ALPHA_VANTAGE_API_KEY';  // Replace with your API key
 const stocks = [
-    { symbol: 'AAPL', name: 'Apple' },
-    { symbol: 'GOOGL', name: 'Google' },
-    { symbol: 'AMZN', name: 'Amazon' },
+    { symbol: 'AAPL', name: 'Apple', halalRating: 'Halal', reason: 'Apple does not engage in any prohibited activities such as gambling or alcohol production.' },
+    { symbol: 'GOOGL', name: 'Google', halalRating: 'Halal', reason: 'Google operates primarily in technology and advertising, which is compliant with Islamic finance principles.' },
+    { symbol: 'AMZN', name: 'Amazon', halalRating: 'Halal', reason: 'Amazon operates in e-commerce and technology, which are permissible.' },
 ];
 
 const stockList = document.getElementById('stockList');
+const halalList = document.getElementById('halalList');
 const updateStocksButton = document.getElementById('updateStocksButton');
 const stockChartCtx = document.getElementById('stockChart').getContext('2d');
 
@@ -104,11 +105,50 @@ function createStockChart() {
         });
 }
 
+// Function to render Halal Ratings
+function renderHalalRatings() {
+    halalList.innerHTML = '';
+
+    stocks.forEach(stock => {
+        const halalItem = document.createElement('li');
+        halalItem.innerHTML = `
+            <strong>${stock.name} (${stock.symbol})</strong>
+            <p>Halal Rating: ${stock.halalRating}</p>
+            <p>Reason: ${stock.reason}</p>
+        `;
+        halalList.appendChild(halalItem);
+    });
+}
+
+// Tab navigation logic
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+
+    tabs.forEach(tab => {
+        tab.style.display = 'none';
+    });
+
+    buttons.forEach(button => {
+        button.classList.remove('active');
+    });
+
+    document.getElementById(tabId).style.display = 'block';
+    document.getElementById(`${tabId}Btn`).classList.add('active');
+}
+
+// Initial setup for tabs
+document.getElementById('priceTab').style.display = 'block';
+document.getElementById('priceTabBtn').classList.add('active');
+
+// Event listeners for tabs
+document.getElementById('priceTabBtn').addEventListener('click', () => showTab('priceTab'));
+document.getElementById('halalTabBtn').addEventListener('click', () => showTab('halalTab'));
+document.getElementById('trendsTabBtn').addEventListener('click', () => showTab('priceTab'));
+
 // Event listener for the update button
 updateStocksButton.addEventListener('click', updateStockList);
 
 // Initial stock data load
 updateStockList();
-
-// Optional: Live update every 60 seconds
-setInterval(updateStockList, 60000);
+renderHalalRatings();
