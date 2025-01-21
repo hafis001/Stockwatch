@@ -1,4 +1,4 @@
-const apiKey = 'YOUR_ALPHA_VANTAGE_API_KEY';  // Replace with your API key
+const apiKey = ' AWYH6T5E6894E3CA';  // Replace with your API key
 const stocks = [
     { symbol: 'AAPL', name: 'Apple', halalRating: 'Halal', reason: 'Apple does not engage in any prohibited activities such as gambling or alcohol production.' },
     { symbol: 'GOOGL', name: 'Google', halalRating: 'Halal', reason: 'Google operates primarily in technology and advertising, which is compliant with Islamic finance principles.' },
